@@ -9,3 +9,9 @@ for /f "tokens=2 delims==" %%i in ("%link%") do (
 )
 
 docker run -it --rm -v "%cd%":/app youtube-subtitles yt-dlp -o "/app/!filename!" -f mp4 "%link%"
+
+set "mp3filename=!filename:.mp4=.mp3!"
+
+docker run -v "%cd%":/app youtube-subtitles sh -c "ffmpeg -i '/app/!filename!' -vn -ar 44100 -ac 2 -b:a 192k '/app/!mp3filename!'"
+
+@pause
